@@ -5,7 +5,6 @@
 A high-performance C++ implementation of the **GOST 34.12-2015** symmetric block cipher (widely known as **Kuznechik**). This repository provides a professional CLI utility for file encryption with support for advanced cipher modes and secure key derivation.
 
 ---
-
 ### 🛡️ Technical Specifications
 
 | Feature | Specification |
@@ -18,7 +17,6 @@ A high-performance C++ implementation of the **GOST 34.12-2015** symmetric block
 | **Modes** | CBC (Cipher Block Chaining), ECB (Electronic Codebook) |
 
 ---
-
 ### ⚙️ Core Architecture
 
 The project is designed with modularity and separation of concerns in mind:
@@ -31,7 +29,6 @@ The project is designed with modularity and separation of concerns in mind:
 > The implementation has been verified against the official test vectors provided in **Annex A** of the GOST 34.12-2015 standard.
 
 ---
-
 ### 🚀 Installation & Building
 
 The project requires a compiler with **C++17** support and **CMake** (v3.10+).
@@ -45,54 +42,60 @@ cd Kuznechik
 mkdir Build && cd Build
 cmake ..
 cmake --build . --config Release
+```
 
-💻 Command Line Interface
+---
+### 💻 Command Line Interface
 
 The utility supports action flags, password input, and mode selection.
-code Bash
 
+```bash
 ./kuznechik [e/d] [input_path] -p [password] [options]
+```
 
-Arguments:
+#### Arguments:
+*   `e` | `d` : **Encrypt** or **Decrypt** the target file.
+*   `-p <str>` : Define the secret password for SHA-256 key derivation.
+*   `-m <mode>` : Cipher mode: `cbc` (default) or `ecb`.
 
-    e | d : Encrypt or Decrypt the target file.
+> [!WARNING]
+> ECB mode does not provide serious security for data with patterns (like images). It is included primarily for standard compliance and verification. Use **CBC** for production data.
 
-    -p <str> : Define the secret password for SHA-256 key derivation.
-
-    -m <mode> : Cipher mode: cbc (default) or ecb.
-
-    [!WARNING]
-    ECB mode does not provide serious security for data with patterns (like images). It is included primarily for standard compliance and verification. Use CBC for production data.
-
-Example Usage:
-code Bash
-
+#### Example Usage:
+```bash
 # Encrypt a file using CBC mode
 ./kuznechik e test.txt -p "MySecurePass123" -m cbc
 
 # Decrypt the resulting file
 ./kuznechik d test_e_CBC.txt -p "MySecurePass123" -m cbc
+```
 
-🧪 Automated Verification
+---
+### 🧪 Automated Verification
 
 The repository includes a Python-based integration test suite to verify data integrity across different file types (binary, text, media).
-code Bash
 
+```bash
 python tests/run_tests.py
+```
 
-    [!IMPORTANT]
-    The test script verifies the result by calculating SHA-256 checksums of the original and the decrypted data. A PASS status ensures bit-perfect restoration.
+> [!IMPORTANT]
+> The test script verifies the result by calculating **SHA-256 checksums** of the original and the decrypted data. A `PASS` status ensures bit-perfect restoration.
 
-📂 Directory Structure
-code Text
+---
+### 📂 Directory Structure
 
+```text
 .
 ├── include/           # Header files (.h)
 ├── src/               # Implementation files (.cpp, .c)
 ├── tests/             # Python testing framework
 ├── CMakeLists.txt     # Build configuration
 └── README.md          # Technical documentation
+```
 
-⚖️ License
+---
+### ⚖️ License
 
-This project is licensed under the MIT License. See the LICENSE file for more information.
+This project is licensed under the **MIT License**. See the `LICENSE` file for more information.
+
